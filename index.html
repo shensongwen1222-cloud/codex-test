@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Excel Report Merger</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero" aria-labelledby="app-title">
+      <p class="eyebrow">Browser-only Excel utility</p>
+      <h1 id="app-title">Merge Excel reports into one summary workbook</h1>
+      <p class="hero-copy">
+        Upload multiple <strong>.xlsx</strong>, <strong>.xls</strong>, or <strong>.csv</strong> files, preview the combined rows,
+        review summary statistics, and export <strong>summary.xlsx</strong>. Processing happens locally in your browser.
+      </p>
+    </section>
+
+    <section class="card uploader" aria-labelledby="upload-title">
+      <div>
+        <h2 id="upload-title">1. Upload reports</h2>
+        <p>Select one or more Excel files. Every worksheet in each workbook is merged.</p>
+      </div>
+      <label class="drop-zone" for="file-input">
+        <span class="drop-icon" aria-hidden="true">📄</span>
+        <span class="drop-title">Choose Excel files</span>
+        <span class="drop-hint">or drag and drop them here</span>
+        <input id="file-input" type="file" accept=".xlsx,.xls,.csv" multiple />
+      </label>
+      <div class="actions">
+        <button id="merge-button" type="button" disabled>Merge files</button>
+        <button id="reset-button" type="button" class="secondary" disabled>Reset</button>
+      </div>
+      <ul id="file-list" class="file-list" aria-live="polite"></ul>
+      <p id="status" class="status" role="status">Waiting for files.</p>
+    </section>
+
+    <section class="stats-grid" aria-label="Workbook summary statistics">
+      <article class="stat-card">
+        <span class="stat-label">Files</span>
+        <strong id="stat-files">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Merged rows</span>
+        <strong id="stat-rows">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Columns</span>
+        <strong id="stat-columns">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Numeric columns</span>
+        <strong id="stat-numeric">0</strong>
+      </article>
+    </section>
+
+    <section class="card" aria-labelledby="stats-title">
+      <div class="section-header">
+        <div>
+          <h2 id="stats-title">2. Summary statistics</h2>
+          <p>Numeric columns include count, sum, average, minimum, and maximum values.</p>
+        </div>
+        <button id="export-button" type="button" disabled>Export summary.xlsx</button>
+      </div>
+      <div class="table-wrap">
+        <table id="stats-table">
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Type</th>
+              <th>Non-empty</th>
+              <th>Blank</th>
+              <th>Unique</th>
+              <th>Sum</th>
+              <th>Average</th>
+              <th>Min</th>
+              <th>Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="9" class="empty-state">Merge files to calculate statistics.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="preview-title">
+      <div class="section-header">
+        <div>
+          <h2 id="preview-title">3. Merged data preview</h2>
+          <p>Previewing the first 100 merged rows. The exported workbook contains all rows.</p>
+        </div>
+      </div>
+      <div class="table-wrap preview-wrap">
+        <table id="preview-table">
+          <tbody>
+            <tr><td class="empty-state">No merged rows yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
